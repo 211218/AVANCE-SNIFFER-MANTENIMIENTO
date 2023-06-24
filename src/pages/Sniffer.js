@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { CSVLink } from 'react-csv';
 import Swal from 'sweetalert2';
 import Buscar from './search';
-
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
+import '../styles/grafica.css';
 
 const Table = () => {
 
@@ -14,7 +15,8 @@ const Table = () => {
 
 	const [time, setTime] = useState(new Date().toLocaleTimeString());
 
-
+	const [chartData, setChartData] = useState([]);
+	  
 
 	const today = new Date();
 	const year = today.getFullYear();
@@ -46,11 +48,25 @@ const Table = () => {
 	};
 
 	useEffect(() => {
+
+		const data_tem = [
+			{ ip: '192.168.0.1', tam_src: 100 },
+			{ ip: '192.168.0.2', tam_src: 200 },
+			{ ip: '192.168.0.3', tam_src: 150 },
+			{ ip: '192.168.0.4', tam_src: 300 },
+			{ ip: '192.168.0.5', tam_src: 250 },
+		  ];
+
 		fetch('http://localhost:5000/sniff')
 			.then(response => response.json())
 			.then(data => {
 				setSniffData(data);
 				setCsvData(data);
+				const chartData = data.map(item => ({
+					ip: item.ip_src,
+					tam_src: item.tam_src,
+				  }));
+				  setChartData(data_tem);
 			})
 			.catch(error => console.log(error));
 	}, []);
@@ -161,7 +177,19 @@ const Table = () => {
 							</table>
 
 						</div>
+							
+					<div className="grafica">
+					<h3>Gráfica de Datos</h3>
+					<LineChart className='grafica' width={1500} height={800}  data={chartData}>
+					<CartesianGrid strokeDasharray="3 3" />
+					<XAxis dataKey="ip" />
+					<YAxis />
+					<Tooltip />
+					<Legend />
+					<Line type="monotone" dataKey="tam_src" stroke="#8884d8" activeDot={{ r: 8 }} />
+					</LineChart>
 					</div>
+			</div>
 
 				</div>
 			</main>

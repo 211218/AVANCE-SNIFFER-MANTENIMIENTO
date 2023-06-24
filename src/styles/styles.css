@@ -970,3 +970,8 @@ a:hover{
 	color: rgba(43, 45, 66, 0.7);
 	font-size: 1.5em;
   }
+
+  .grafica {
+	position: relative;
+	text-align: center;
+  }
