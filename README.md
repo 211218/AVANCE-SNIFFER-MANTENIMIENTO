@@ -8,3 +8,6 @@ Agregar estadisticas, por cada paquete de direcciones Mac. Gestionar estos datos
 
 Gráfica en funcionamiento: Dirección IP y Paquete src.
 Logeo de navegadores corregido.
+
+
+
