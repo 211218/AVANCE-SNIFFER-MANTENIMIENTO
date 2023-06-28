@@ -16,6 +16,8 @@ const Table = () => {
 	const [time, setTime] = useState(new Date().toLocaleTimeString());
 
 	const [chartData, setChartData] = useState([]);
+	
+	const [timeMac, setTimeMac] = useState([])
 	  
 
 	const today = new Date();
@@ -49,14 +51,6 @@ const Table = () => {
 
 	useEffect(() => {
 
-		const data_tem = [
-			{ ip: '192.168.0.1', tam_src: 100 },
-			{ ip: '192.168.0.2', tam_src: 200 },
-			{ ip: '192.168.0.3', tam_src: 150 },
-			{ ip: '192.168.0.4', tam_src: 300 },
-			{ ip: '192.168.0.5', tam_src: 250 },
-		  ];
-
 		fetch('http://localhost:5000/sniff')
 			.then(response => response.json())
 			.then(data => {
@@ -66,7 +60,14 @@ const Table = () => {
 					ip: item.ip_src,
 					tam_src: item.tam_src,
 				  }));
-				  setChartData(data_tem);
+				  setChartData(chartData);
+
+				  const timeMac = data.map(item => ({
+					ip: item.ip_src,
+					tam: item.tam_src,
+					time: 60,
+				  }));
+				  setTimeMac(timeMac);
 			})
 			.catch(error => console.log(error));
 	}, []);
@@ -187,6 +188,19 @@ const Table = () => {
 					<Tooltip />
 					<Legend />
 					<Line type="monotone" dataKey="tam_src" stroke="#8884d8" activeDot={{ r: 8 }} />
+					</LineChart>
+					</div>
+
+
+					<div className="grafica">
+					<h3>Gráfica de Tráfico de paquetes</h3>
+					<LineChart className='grafica' width={1500} height={800}  data={timeMac}>
+					<CartesianGrid strokeDasharray="3 3" />
+					<XAxis dataKey="ip" />
+					<YAxis />
+					<Tooltip />
+					<Legend />
+					<Line type="monotone" dataKey="time" stroke="#8884d8" activeDot={{ r: 8 }} />
 					</LineChart>
 					</div>
 			</div>
