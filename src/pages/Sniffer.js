@@ -50,7 +50,6 @@ const Table = () => {
 	};
 
 	useEffect(() => {
-
 		fetch('http://localhost:5000/sniff')
 			.then(response => response.json())
 			.then(data => {
@@ -91,9 +90,7 @@ const Table = () => {
 		setCsvData(data);
 	};
 
-
 	return (
-
 		<>
 			<Buscar
 				handleSearchChange={handleSearchChange}

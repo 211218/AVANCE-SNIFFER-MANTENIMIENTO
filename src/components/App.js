@@ -13,7 +13,6 @@ import PutPasMaster from "../pages/PutPassMaster";
 
 function App() {
 
- 
   return (
     <div>
     
